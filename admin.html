@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - Floral Blossom</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Login Screen -->
+    <div class="login-container" id="loginContainer">
+        <div class="login-box">
+            <h1>🌸 Admin Login</h1>
+            <p>Floral Blossom Admin Panel</p>
+            <form id="loginForm">
+                <div class="form-group">
+                    <input type="text" id="username" placeholder="Username" required>
+                </div>
+                <div class="form-group">
+                    <input type="password" id="password" placeholder="Password" required>
+                </div>
+                <button type="submit" class="btn-primary full-width">Login</button>
+            </form>
+            <p class="login-hint">Default: admin / admin123</p>
+        </div>
+    </div>
+
+    <!-- Admin Panel -->
+    <div class="admin-panel" id="adminPanel" style="display: none;">
+        <nav class="navbar">
+            <div class="container">
+                <div class="nav-content">
+                    <div class="logo">Floral Blossom Admin</div>
+                    <div style="display: flex; gap: 1rem; align-items: center;">
+                        <a href="index.html" class="btn-secondary">View Store</a>
+                        <button class="btn-secondary" id="logoutBtn">Logout</button>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <div class="admin-container">
+            <div class="admin-header">
+                <h1>Admin Dashboard</h1>
+                <p>Manage products and orders</p>
+            </div>
+
+            <div class="admin-stats">
+                <div class="stat-card">
+                    <h3 id="totalProducts">0</h3>
+                    <p>Total Products</p>
+                </div>
+                <div class="stat-card">
+                    <h3 id="totalOrders">0</h3>
+                    <p>Total Orders</p>
+                </div>
+                <div class="stat-card">
+                    <h3 id="totalRevenue">₹0</h3>
+                    <p>Total Revenue</p>
+                </div>
+            </div>
+
+            <div class="admin-tabs">
+                <button class="tab-btn active" onclick="switchTab('products')">Products</button>
+                <button class="tab-btn" onclick="switchTab('orders')">Orders</button>
+            </div>
+
+            <!-- Products Tab -->
+            <div class="tab-content active" id="productsTab">
+                <div class="admin-actions">
+                    <button class="btn-primary" id="addProductBtn">+ Add New Product</button>
+                </div>
+                <div class="admin-list" id="productsList">
+                    <div class="loading">Loading products...</div>
+                </div>
+            </div>
+
+            <!-- Orders Tab -->
+            <div class="tab-content" id="ordersTab">
+                <div id="ordersList">
+                    <div class="loading">Loading orders...</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Product Form Modal -->
+    <div class="modal" id="productFormModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="productFormTitle">Add New Product</h3>
+                <button class="close-modal" id="closeProductForm">&times;</button>
+            </div>
+            <form id="productForm">
+                <input type="hidden" id="productId">
+                <input type="hidden" id="existingImageUrl">
+                <div class="form-group">
+                    <label>Product Title *</label>
+                    <input type="text" id="productTitle" required>
+                </div>
+                <div class="form-group">
+                    <label>Price (₹) *</label>
+                    <input type="number" id="productPrice" required min="1">
+                </div>
+                <div class="form-group">
+                    <label>Product Image *</label>
+                    <div class="image-upload-area" id="imageUploadArea">
+                        <p>📷 Click or drag image here</p>
+                        <p style="font-size: 0.85rem; color: var(--text-light); margin-top: 0.5rem;">JPG, PNG, WEBP (max 5MB)</p>
+                    </div>
+                    <input type="file" id="imageInput" accept="image/*" style="display: none;">
+                </div>
+                <div class="form-group">
+                    <div class="image-preview-container" id="imagePreview">
+                        <span style="color: var(--text-light);">Preview will appear here</span>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <button type="submit" class="btn-primary">Save Product</button>
+                    <button type="button" class="btn-secondary" id="cancelProductForm">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="toast-container" id="toastContainer"></div>
+    <div class="overlay" id="overlay"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.39.0/dist/umd/supabase.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bcryptjs/2.4.3/bcrypt.min.js"></script>
+    <script src="config.js"></script>
+    <script src="admin.js"></script>
+</body>
+</html>
